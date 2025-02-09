@@ -1,0 +1,44 @@
+###
+# @name postMessage
+
+POST {{hostRestKafka}}/topics/test-kafka
+Content-Type: application/vnd.kafka.json.v2+json
+
+{ "records":[
+    { "value":
+        { "id": 123,
+            "amount": 1122.99,
+            "date": "2025-02-07T14:30:00"
+        }
+    }
+]}
+
+###
+# @name getPayment
+GET {{hostApp}}/payment
+
+###
+curl -X POST "{{datadog_host}}/api/v1/series?api_key={{dd_api_key}}" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "series": [
+             {
+               "metric": "custom.metric.name",
+               "points": [
+               ],
+               "type": "gauge",
+               "host": "my-host",
+               "tags": ["environment:production", "role:web"]
+             }
+           ]
+         }'
+
+
+######################
+# @dd_api_key=636ac01f13cf73a56e51ee829fe57192
+@dd_api_key=dev_key
+//@datadog_host=api.datadoghq.com
+# @datadog_host=http://us5.datadoghq.com
+@datadog_host=http://localhost:8085
+@hostRestKafka=http://localhost:8082
+@hostApp=http://localhost:8080

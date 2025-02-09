@@ -1,0 +1,52 @@
+spring.application.name: kafka-test
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: kafka-test
+      auto-offset-reset: earliest
+
+app:
+  topic:
+    name: test-kafka
+    group-id: test-group
+#
+
+#dd:
+#  logs:
+#    injection: true
+#  service: ${spring.application.name}
+#  env: dev
+#  trace:
+#    agent:
+#      url: http://localhost
+#      port: 8126
+#    sample:
+#      rate: 1
+#  tags:
+#    - "app_type:kafka"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics, health
+  datadog:
+    metrics:
+      export:
+        apiKey: "dev_key"
+        uri: ${DD_AGENT_HOST}
+#        api-key: ${DD_API_KEY}
+        # 172.27.0.1:8126/api/v1/series?api_key=
+        step: "10s"
+    service:
+      kafka-test-gaspar
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: dev
+
+logging:
+  level:
+    root: DEBUG
