@@ -13,19 +13,12 @@ app:
     group-id: test-group
 #
 
-#dd:
-#  logs:
-#    injection: true
-#  service: ${spring.application.name}
-#  env: dev
-#  trace:
-#    agent:
-#      url: http://localhost
-#      port: 8126
-#    sample:
-#      rate: 1
-#  tags:
-#    - "app_type:kafka"
+dd:
+  trace:
+    enabled: true
+    analytics:
+      enabled: true
+    annotations: com.gaspar.kafka_test
 
 management:
   endpoints:
@@ -49,4 +42,6 @@ management:
 
 logging:
   level:
+    datadig:
+      trace: DEBUG
     root: DEBUG
